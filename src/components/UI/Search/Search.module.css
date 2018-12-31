@@ -1,0 +1,28 @@
+.Input {
+
+  position:  relative;
+  align-items: center;
+  width:80%;
+  text-align: center;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: auto;
+}
+
+.Input Input{
+  display: block;
+  height: 100%;
+
+}
+
+
+@media (min-width:500px){
+  .Input{
+    align-items: center;
+    text-align: center;
+    text-rendering:  geometricPrecision;
+    width:90%;
+  }
+
+}
