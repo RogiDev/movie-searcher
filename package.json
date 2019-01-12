@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
   "name": "movie-searcher",
   "homepage": "https://github.com/RogiDev/movie-searcher",
+=======
+  "name": "movie-search-project",
+  "homepage": "https://RogiDev.github.com/movie-searcher"
+>>>>>>> parent of c0fc0b4... improve my app!
   "version": "0.1.0",
   "private": true,
   "dependencies": {

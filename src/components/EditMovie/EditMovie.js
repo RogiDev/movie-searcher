@@ -2,7 +2,7 @@ import React,{Component,Fragment} from 'react';
 import {connect} from 'react-redux';
 import {alert} from 'notie';
 import {Button ,InputGroup,Input} from 'reactstrap';
-import {saveMovie,addMovie} from '../../store/movieSearcher.js'
+import {saveMovie} from '../../store/movieSearcher.js'
 import withErrorHandler from '../../containers/withErrorHandler/withErrorHandler.js';
 import axios from 'axios';
 
@@ -10,8 +10,8 @@ import axios from 'axios';
 // https://image.tmdb.org/t/p/w500/
 
 class EditMovie extends Component {
-  state= {
-    editedMovie:this.props.movie
+  state={
+    editedMovie:null
 
 }
 
@@ -32,8 +32,8 @@ class EditMovie extends Component {
   }
 
 
-  closeModal = (event, modalClicked,validationState,movie,saveMovie) => {
-      this.props.saveMovie(movie);
+  closeModal = (event, modalClicked,saveMovie,validationState,showDialog) => {
+
   }
 
 
@@ -50,29 +50,27 @@ class EditMovie extends Component {
     updatedMovie[inputIdentifier] = updatedMovieElement;
     this.setState({
       editedMovie:updatedMovie
-     
-    })
-    this.props.saveMovie(this.state.editedMovie);
+
+    });
 
   }
 
   render() {
 
-    let movieForm = Object.values(this.props.movie).map( (key,i) => {
-     
+    let movieForm = Object.values(this.props.movie).map((key,i) => {
+
         return(
-         
+
           <form >
-            <li>
-            <img width='100px' alt='poster' src={`https://image.tmdb.org/t/p/w500/${this.props.movie.poster_path}`} />
+            <img width='100px' alt='poster' src={`https://image.tmdb.org/t/p/w500/${key.poster_path}`} />
             <hr></hr>
-            <label>You Choose: {this.props.movie.title}</label>
+            <label>You Choose: {key.title}</label>
               <div style={{display:'flex', textAlign:'center' ,justifyContent:'center'}}>
           <InputGroup style={{display:'block',width:'80%'}} key={key + i} >
-            <p>Title:</p> <Input  type='text'  value={this.props.movie.title} onChange={(event)=>this.InputOnChangeHandler(event,key.title)} />
-            <p>Rate:</p> <Input type='text' defaultValue={this.props.movie.vote_average} onChange={(event)=>this.InputOnChangeHandler(event,key.vote_average)} />
-            <p>Date:</p> <Input type='text' defaultValue={this.props.movie.release_date} onChange={(event)=>this.InputOnChangeHandler(event,key.release_date)} />
-            <p>Overview</p> <Input type='text' defaultValue={this.props.movie.overview} onChange={(event)=>this.InputOnChangeHandler(event,key.overview)} />
+            <p>Title:</p> <Input  type='text' defaultValue={key.title} onChange={(event)=>this.InputOnChangeHandler(event,this.inputIdentifier)} />
+            <p>Rate:</p> <Input type='text' defaultValue={key.vote_average} onChange={(event)=>this.InputOnChangeHandler(event,this.inputIdentifier)} />
+            <p>Date:</p> <Input type='text' defaultValue={key.release_date} onChange={(event)=>this.InputOnChangeHandler(event,this.inputIdentifier)} />
+            <p>Overview</p> <Input type='textarea' defaultValue={key.overview} onChange={(event)=>this.InputOnChangeHandler(event,this.inputIdentifier)} />
           </InputGroup>
         </div>
           <div style={{marginTop:'10px',display:'flex',justifyContent: 'space-around',textAlign:'center',
@@ -83,7 +81,7 @@ class EditMovie extends Component {
         display:'block',
         width:'30%'
 
-      }}onClick={(event) => this.closeModal(event,this.props.modalClosed('false'),this.validationState,key,this.props.saveMovie(this.props.movie))} >Save</Button>
+      }}onClick={(event) => this.closeModal(event,this.props.modalClosed('false'),this.props.saveMovie(this.state.editedMovie ),key,this.validationState)} >Save</Button>
       <Button style={{backgroundColor: "#6D0301",
         color: "white",
         boxSizing: "border-box",
@@ -91,11 +89,9 @@ class EditMovie extends Component {
         width:'30%'
       }}>Cancel</Button>
     </div>
-    </li>
-    </form>
-    
-    );
-      
+        </form>
+
+        );
     })
     .reduce((arr,el) =>{
       return arr.concat(el);
@@ -105,12 +101,19 @@ class EditMovie extends Component {
         return (
           <Fragment>
 
-              {movieForm[0]}
+              {movieForm}
         </Fragment>
     );
   }
 }
 
 
+const mapStateToProps = state =>{
+  return {
+    ...state
+  }
 
-export default connect(null,{saveMovie,addMovie})(withErrorHandler(EditMovie,axios));
+}
+
+
+export default connect(mapStateToProps,{saveMovie})(withErrorHandler(EditMovie,axios));

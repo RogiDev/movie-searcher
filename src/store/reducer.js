@@ -4,8 +4,7 @@ import {SEARCH_MOVIES,UPDATE_MOVIE,SAVE_MOVIE,SELECT_MOVIE,ADD_MOVIE,POPULAR_MOV
 const initialState = {
   movies: [],
   clicked:false,
-  movie:{},
-  myMovies:[]
+  movie:{}
 }
 
 const reducer = (state = initialState , action = {}) => {
@@ -29,44 +28,30 @@ const reducer = (state = initialState , action = {}) => {
       case(SELECT_MOVIE):{
         return{
         ...state,
-          movie:{
-           ...state.movie,
-            id: action.movie.id,
-            title: action.movie.title,
-            overview: action.movie.overview,
-            poster_path: action.movie.poster_path,
-            vote_average: action.movie.vote_average,
-            release_date: action.movie.release_date
-            
-          }
+          movie:[].concat(action.payload)
       };
     }
     case(ADD_MOVIE):{
       return {
         ...state,
-      myMovies:action.payload,
-      movie:action.movie
-      
+      movies:action.payload
+
       };
     }
 
     case(SAVE_MOVIE):{
       return {
       ...state,
-      myMovies:action.payload,
-      movie:action.movie
-      };
-    }
-  
+      movie:state.movie.concat(action.payload),
 
+    };
+    }
     case(UPDATE_MOVIE):{
       return {
         ...state,
-        myMovies:action.payload, 
-        movie:action.movie
+        movies:state.movies.concat(action.payload)
       };
     }
-  
 
 
 
@@ -75,8 +60,7 @@ const reducer = (state = initialState , action = {}) => {
         ...state,
         movies:[],
         searchValue:'',
-        clicked:false,
-        movie:{}
+        clicked:false
 
       };
     }
@@ -84,6 +68,6 @@ const reducer = (state = initialState , action = {}) => {
         return state
       }
     }
-  }
+ }
 
 export default reducer;
