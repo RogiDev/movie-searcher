@@ -20,7 +20,7 @@ const reducer = (state = initialState , action = {}) => {
     case (POPULAR_MOVIES):{
         return{
           ...state,
-        movies: state.movies.concat(action.payload)
+        movies: [].concat(action.payload)
 
         };
       }
@@ -42,7 +42,7 @@ const reducer = (state = initialState , action = {}) => {
     case(SAVE_MOVIE):{
       return {
       ...state,
-      movie:state.movie.concat(action.payload),
+      movie:[].concat(action.payload),
 
     };
     }
