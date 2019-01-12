@@ -38,9 +38,6 @@ componentWillUnmount() {
       this.setState({
           movieName: searchingKey
       });
-      if(this.props.clicked) {
-        this.props.cleanAllData();
-      }
 
 
 }
@@ -83,13 +80,13 @@ closeModal = () =>{
 
 
         <Movie
-          movies={this.props.movies}
+         {...this.props}
           modalClicked={this.modalOpener}
-          movie={this.props.movie || this.props.editedMovie} />
+          />
 
 
         <Modal show={this.state.open} modalClosed={this.closeModal}>
-            <EditMovie movies={this.props.movies} movie={this.props.movie || this.props.editedMovie} modalClosed={this.closeModal} />
+            <EditMovie {...this.props} modalClosed={this.closeModal} />
         </Modal>
 
 

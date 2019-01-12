@@ -10,7 +10,7 @@ class Movie extends Component{
 
 
   modalShow = (modalClicked,selectedMovieSearch,movie ) => {
-
+    
 
   }
   render(){
@@ -32,7 +32,7 @@ class Movie extends Component{
       textAlign:'center',
       alignItems:'center',
       display:'block'
-    }} onClick={ (movie) =>  this.modalShow(this.props.modalClicked(movie),this.props.selectedMovieSearch(this.props.movies[i]))} >Edit</Button>
+    }} onClick={ (movie) =>  this.modalShow(this.props.modalClicked(movie[i]),this.props.selectedMovieSearch(this.props.movies[i]),this.props.movies[i])} >Edit</Button>
         </CardBody>
       </Card>
     </li>
@@ -50,10 +50,11 @@ class Movie extends Component{
 }
 
 
-const mapStateToProps = state =>{
+const mapStateToProps = state => {
   return {
   ...state,
-  movie:state.movie
+  movie:state.movie,
+  movies:state.movies
   }
 }
 export default connect(mapStateToProps,{selectedMovieSearch})(withErrorHandler(Movie,axios));
