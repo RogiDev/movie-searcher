@@ -63,7 +63,7 @@ class EditMovie extends Component {
         return(
          
           <form >
-            <li>
+            <li style={{textDecoration:'none'}}>
             <img width='100px' alt='poster' src={`https://image.tmdb.org/t/p/w500/${this.props.movie.poster_path}`} />
             <hr></hr>
             <label>You Choose: {this.props.movie.title}</label>
