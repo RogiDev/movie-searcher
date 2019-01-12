@@ -4,7 +4,8 @@ import {SEARCH_MOVIES,UPDATE_MOVIE,SAVE_MOVIE,SELECT_MOVIE,ADD_MOVIE,POPULAR_MOV
 const initialState = {
   movies: [],
   clicked:false,
-  movie:{}
+  movie:{},
+  myMovies:[]
 }
 
 const reducer = (state = initialState , action = {}) => {
@@ -20,7 +21,7 @@ const reducer = (state = initialState , action = {}) => {
     case (POPULAR_MOVIES):{
         return{
           ...state,
-        movies: [].concat(action.payload)
+        movies: state.movies.concat(action.payload)
 
         };
       }
@@ -28,34 +29,44 @@ const reducer = (state = initialState , action = {}) => {
       case(SELECT_MOVIE):{
         return{
         ...state,
-          movie:[].concat(action.payload)
+          movie:{
+           ...state.movie,
+            id: action.movie.id,
+            title: action.movie.title,
+            overview: action.movie.overview,
+            poster_path: action.movie.poster_path,
+            vote_average: action.movie.vote_average,
+            release_date: action.movie.release_date
+            
+          }
       };
     }
     case(ADD_MOVIE):{
       return {
         ...state,
-      movies:action.payload
-
+      myMovies:action.payload,
+      movie:action.movie
+      
       };
     }
 
     case(SAVE_MOVIE):{
       return {
       ...state,
-<<<<<<< HEAD
-      movie:[].concat(action.payload),
-=======
-      movie:state.movie.concat(action.payload),
->>>>>>> parent of c0fc0b4... improve my app!
-
-    };
+      myMovies:action.payload,
+      movie:action.movie
+      };
     }
+  
+
     case(UPDATE_MOVIE):{
       return {
         ...state,
-        movies:state.movies.concat(action.payload)
+        myMovies:action.payload, 
+        movie:action.movie
       };
     }
+  
 
 
 
@@ -64,7 +75,8 @@ const reducer = (state = initialState , action = {}) => {
         ...state,
         movies:[],
         searchValue:'',
-        clicked:false
+        clicked:false,
+        movie:{}
 
       };
     }
@@ -72,6 +84,6 @@ const reducer = (state = initialState , action = {}) => {
         return state
       }
     }
- }
+  }
 
 export default reducer;
