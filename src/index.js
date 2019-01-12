@@ -16,7 +16,7 @@ const store = createStore(reducer,composeEnhancers(applyMiddleware(thunk)));
 
 const app = (
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter base='/'>
       <App />
     </BrowserRouter>
   </Provider>
