@@ -1,6 +1,5 @@
 {
   "name": "movie-search-project",
-  "homepage": "https://RogiDev.github.com/movie-searcher/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
