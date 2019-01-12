@@ -42,7 +42,11 @@ const reducer = (state = initialState , action = {}) => {
     case(SAVE_MOVIE):{
       return {
       ...state,
+<<<<<<< HEAD
       movie:[].concat(action.payload),
+=======
+      movie:state.movie.concat(action.payload),
+>>>>>>> parent of c0fc0b4... improve my app!
 
     };
     }
