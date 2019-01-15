@@ -7,26 +7,37 @@ import withErrorHandler from '../../containers/withErrorHandler/withErrorHandler
 import axios from 'axios';
 
 
-// https://image.tmdb.org/t/p/w500/
-
 class EditMovie extends Component {
+
   state= {
-    editedMovie:this.props.movie
+    editedMovie:{}
 
 }
+
+componentWillMount = () => {
+  this.state.editedMovie = {
+      id: this.props.movie.id,
+      poster_path: this.props.movie.poster_path,
+      overview:this.props.movie.overview,
+      vote_average:this.props.movie.vote_average,
+      title:this.props.movie.title,
+      release_date:this.props.movie.release_date
+  }
+}
+
 
 
   validationState = () => {
     let movie = this.props.movie;
         for (let key in movie) {
             if (movie[key] === '' || movie[key] === ' ') {
-                alert({
+                new alert({
                   type:3,
                   text:'Please Fill All Fields!'
                 });
                 return false;
             }else{
-              alert({type: 1, text: 'Your Movie Has Been Added' })
+             new alert({type: 1, text: 'Your Movie Has Been Added' })
             }
         }
   }
@@ -40,39 +51,41 @@ class EditMovie extends Component {
   InputOnChangeHandler = (event,inputIdentifier) => {
     event.preventDefault();
     let  updatedMovie = {
-        ...this.state.editedMovie
+        ...this.state.editedMovie[inputIdentifier]
       };
-    let updatedMovieElement ={
-      ...updatedMovie[inputIdentifier]
-    };
-
-    updatedMovieElement = event.target.value;
-    updatedMovie[inputIdentifier] = updatedMovieElement;
+   
+    updatedMovie[inputIdentifier] =  event.target.value;
     this.setState({
       editedMovie:updatedMovie
      
-    })
-    this.props.saveMovie(this.state.editedMovie);
+    });
 
   }
 
   render() {
-
-    let movieForm = Object.values(this.props.movie).map( (key,i) => {
+    
+    let movieFormArray = [];
+    for(let key in this.state.editedMovie){
+      movieFormArray.push({
+        id:key
+      })
+    }
+    let form = 
+    movieFormArray.map( (key,i) => {
      
         return(
          
           <form >
-            <li style={{textDecoration:'none'}}>
+            
             <img width='100px' alt='poster' src={`https://image.tmdb.org/t/p/w500/${this.props.movie.poster_path}`} />
             <hr></hr>
-            <label>You Choose: {this.props.movie.title}</label>
+            <label>You Choose: {this.state.editedMovie.title}</label>
               <div style={{display:'flex', textAlign:'center' ,justifyContent:'center'}}>
           <InputGroup style={{display:'block',width:'80%'}} key={key + i} >
-            <p>Title:</p> <Input  type='text'  value={this.props.movie.title} onChange={(event)=>this.InputOnChangeHandler(event,key.title)} />
-            <p>Rate:</p> <Input type='text' defaultValue={this.props.movie.vote_average} onChange={(event)=>this.InputOnChangeHandler(event,key.vote_average)} />
-            <p>Date:</p> <Input type='text' defaultValue={this.props.movie.release_date} onChange={(event)=>this.InputOnChangeHandler(event,key.release_date)} />
-            <p>Overview</p> <Input type='text' defaultValue={this.props.movie.overview} onChange={(event)=>this.InputOnChangeHandler(event,key.overview)} />
+            <p>Title:</p> <Input  type='text' defaultValue={this.props.movie.title} onChange={(event)=>this.InputOnChangeHandler(event,key.id)} />
+            <p>Rate:</p> <Input type='text' defaultValue={this.props.movie.vote_average} onChange={(event)=>this.InputOnChangeHandler(event,key.id)} />
+            <p>Date:</p> <Input type='text' defaultValue={this.props.movie.release_date} onChange={(event)=>this.InputOnChangeHandler(event,key.id)} />
+            <p>Overview</p> <Input type='text' defaultValue={this.props.movie.overview} onChange={(event)=>this.InputOnChangeHandler(event,key.id)} />
           </InputGroup>
         </div>
           <div style={{marginTop:'10px',display:'flex',justifyContent: 'space-around',textAlign:'center',
@@ -91,7 +104,6 @@ class EditMovie extends Component {
         width:'30%'
       }}>Cancel</Button>
     </div>
-    </li>
     </form>
     
     );
@@ -104,8 +116,7 @@ class EditMovie extends Component {
 
         return (
           <Fragment>
-
-              {movieForm[0]}
+              {form[0]}
         </Fragment>
     );
   }
