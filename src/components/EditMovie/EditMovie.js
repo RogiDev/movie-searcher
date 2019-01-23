@@ -19,7 +19,7 @@ closeModal = (event) => {
   render() {
 
     let finalForm =
-    <div style={{display:'flex', alignContent:'center', textAlign:'center'}}
+    <div style={{display:'flex', alignContent:'center', textAlign:'center'}}>
           <Form 
            onSubmit={this.props.handleSubmit}>
           {this.props.clicked === !true 
@@ -83,7 +83,8 @@ closeModal = (event) => {
     }} onClick={(event) => this.props.modalClosed('false')}>Cancel</Button>
   </div>
   
-     </Form>;
+     </Form>
+     </div>;
 
         return (
           <Fragment>
