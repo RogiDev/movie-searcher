@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App.js';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter} from 'react-router-dom';
+import {ConnectedRouter as Router, routerReducer,routerMiddleware} from 'react-router-redux';
+import createHistory from 'history/createBro'
 import {Provider} from 'react-redux';
 import { createStore , applyMiddleware, compose,combineReducers} from 'redux';
 import movieReducer from './store/reducer.js';
@@ -19,7 +20,7 @@ const store = createStore(movieReducer,composeEnhancers(applyMiddleware(thunk)))
 
 const app = (
   <Provider store={store}>
-    <BrowserRouter >
+    <BrowserRouter base='/'>
       <App />
     </BrowserRouter>
   </Provider>
