@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App.js';
 import * as serviceWorker from './serviceWorker';
-import {ConnectedRouter as Router, routerReducer,routerMiddleware} from 'react-router-redux';
-import createHistory from 'history/createBro'
 import {Provider} from 'react-redux';
-import { createStore , applyMiddleware, compose,combineReducers} from 'redux';
+import { createStore , applyMiddleware, compose} from 'redux';
 import movieReducer from './store/reducer.js';
 import thunk from 'redux-thunk';
+import {BrowserRouter} from 'react-router-dom';
 
 
 
