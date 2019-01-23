@@ -6,6 +6,7 @@ import axios from 'axios';
 import { withFormik,Form,Field } from 'formik';
 import * as Yup from 'yup';
 import {withRouter} from 'react-router-dom';
+import styles from './EditMovie.module.css'
 
 class EditMovie extends Component {
 
@@ -19,7 +20,7 @@ closeModal = (event) => {
   render() {
 
     let finalForm =
-    <div style={{display:'block', alignItems:'center', textAlign:'center'}}>
+   
           <Form 
            onSubmit={this.props.handleSubmit}>
           {this.props.clicked === !true 
@@ -34,17 +35,14 @@ closeModal = (event) => {
             <div>
               {this.props.touched.title && this.props.errors.title && <p>{this.props.errors.title}</p>}
           <label>Title:</label>
-          <hr></hr>
           <Field
           type="text"
           name='title' 
             />
             </div>
-
             <div>
             { this.props.touched.release_date  && this.props.errors.release_date && <p>{this.props.errors.release_date}</p>}
-          <label>Release Date:</label>
-          <hr></hr>
+          <label>Date:</label>
           <Field
           type="date"
           name="release_date"
@@ -53,7 +51,6 @@ closeModal = (event) => {
             <div>
             { this.props.touched.vote_average  && this.props.errors.vote_average && <p>{this.props.errors.vote_average}</p>}
           <label>Rate:</label>
-          <hr></hr>
           <Field 
           name='vote_average'
           type="number"
@@ -63,7 +60,6 @@ closeModal = (event) => {
             <div>
             {this.props.touched.overview && this.props.errors.overview && <p>{this.props.errors.overview}</p>}
           <label>Overview:</label>
-          <hr></hr>
           <Field
           name='overview'
           type="overview"
@@ -87,12 +83,13 @@ closeModal = (event) => {
     }} onClick={(event) => this.props.modalClosed('false')}>Cancel</Button>
   </div>
   
-     </Form>
-     </div>;
+     </Form>;
 
         return (
           <Fragment>
+             <div className={styles.Input}>
               {finalForm}
+              </div>
         </Fragment>
     );
         

@@ -1,0 +1,13 @@
+.Input {
+    display: block;
+    align-items: center;
+    text-align: center;
+    padding: auto;
+  }
+  
+  .Input Field,label,Form{
+    display:block ;
+    width: 100%;
+  }
+
+  
