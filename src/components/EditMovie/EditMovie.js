@@ -19,6 +19,7 @@ closeModal = (event) => {
   render() {
 
     let finalForm =
+    <div style={{display:'flex', alignContent:'center', textAlign:'center'}}
           <Form 
            onSubmit={this.props.handleSubmit}>
           {this.props.clicked === !true 
