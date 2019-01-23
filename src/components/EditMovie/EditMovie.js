@@ -34,6 +34,7 @@ closeModal = (event) => {
             <div>
               {this.props.touched.title && this.props.errors.title && <p>{this.props.errors.title}</p>}
           <label>Title:</label>
+          <hr></hr>
           <Field
           type="text"
           name='title' 
@@ -43,6 +44,7 @@ closeModal = (event) => {
             <div>
             { this.props.touched.release_date  && this.props.errors.release_date && <p>{this.props.errors.release_date}</p>}
           <label>Release Date:</label>
+          <hr></hr>
           <Field
           type="date"
           name="release_date"
@@ -51,6 +53,7 @@ closeModal = (event) => {
             <div>
             { this.props.touched.vote_average  && this.props.errors.vote_average && <p>{this.props.errors.vote_average}</p>}
           <label>Rate:</label>
+          <hr></hr>
           <Field 
           name='vote_average'
           type="number"
@@ -60,6 +63,7 @@ closeModal = (event) => {
             <div>
             {this.props.touched.overview && this.props.errors.overview && <p>{this.props.errors.overview}</p>}
           <label>Overview:</label>
+          <hr></hr>
           <Field
           name='overview'
           type="overview"
