@@ -1,0 +1,20 @@
+.Container{
+    width: 80%;
+    display: flex;
+    box-sizing: border-box;
+    margin: 20px auto auto auto;
+}
+
+.MovieHolder{
+    width:90%;
+    padding: 30px;
+    box-shadow: 1px 1px 1px 1px #ccc;
+    margin:auto;
+   
+}
+
+.ListItem {
+    list-style-type: none;
+  
+  }
+  

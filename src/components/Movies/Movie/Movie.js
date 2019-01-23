@@ -8,12 +8,14 @@ import axios from 'axios';
 
 class Movie extends Component{
 
-
-  modalShow = (modalClicked,selectedMovieSearch,movie ) => {
-    
+  constructor(props){
+    super(props);
+  }
+  modalShow = (event,modalClicked,selectedMovieSearch,movie ) => {
 
   }
   render(){
+    
     let movieList = this.props.movies.map((movie,i) => {
       return(
         <li key={movie.id}>
@@ -32,7 +34,7 @@ class Movie extends Component{
       textAlign:'center',
       alignItems:'center',
       display:'block'
-    }} onClick={ (movie) =>  this.modalShow(this.props.modalClicked(movie[i]),this.props.selectedMovieSearch(this.props.movies[i]),this.props.movies[i])} >Edit</Button>
+    }} onClick={ (event) =>  this.modalShow(event,this.props.modalClicked(this.props.movies[i],this.props.selectedMovieSearch(this.props.movies[i]),this.props.movies[i]))} >Edit</Button>
         </CardBody>
       </Card>
     </li>
@@ -49,12 +51,12 @@ class Movie extends Component{
  }
 }
 
-
-const mapStateToProps = state => {
-  return {
-  ...state,
-  movie:state.movie,
-  movies:state.movies
+const mapStateToProps = state =>{
+    return {
+      movies:state.movies,
+      movie:state.movie,
+      clicked:state.clicked
   }
-}
+};
+
 export default connect(mapStateToProps,{selectedMovieSearch})(withErrorHandler(Movie,axios));

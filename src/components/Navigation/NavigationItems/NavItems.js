@@ -6,7 +6,8 @@ import NavItem from './NavItem/NavItem.js';
 
 const  navItems = (props) => (
     <ul className={styles.NavItems}>
-      <NavItem link='/' active>Search Movie</NavItem>
+      <NavItem link='/' >Search Movie</NavItem>
+      <NavItem link='/mymovies' >My Movies</NavItem>
     </ul>
   );
 

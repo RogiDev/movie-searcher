@@ -1,6 +1,7 @@
-import {SEARCH_MOVIES,ADD_MOVIE,UPDATE_MOVIE,SAVE_MOVIE, POPULAR_MOVIES,SELECT_MOVIE, CLEAN_SEARCH} from './actions.js'
+import {SEARCH_MOVIES,ADD_MOVIE,SAVE_MOVIE, POPULAR_MOVIES,SELECT_MOVIE, CLEAN_SEARCH} from './actions.js'
 import axios from 'axios';
-import notie from 'notie'
+import swal from 'sweetalert';
+
 
 
 let movieArray = [];
@@ -12,32 +13,32 @@ export const searchMoviesFromDB = (name) => {
   return dispatch =>{
     axios.get(`https://api.themoviedb.org/3/search/movie?api_key=70037eb6c1b2400133d1c709f9d0dd6f&query=${name}`)
     .then(res => {
-     movie = {id:res.data.results.id,
-        title:res.data.results.title,
-        overview:res.data.results.overview,
-        vote_average:res.data.results.vote_average,
-        poster_path:res.data.results.poster_path,
-        release_date:res.data.results.release_date}
-    dispatch(searchMovies(res.data.results,movie));
-  }
-  ).catch(res => res.data.error)
-  };
-}
-
-export const searchMovies = (movies) => {
-    return{
+      
+     movie={
+       id:res.data.results.id,
+       title:res.data.results.title,
+       overview:res.data.results.overview,
+       vote_average:res.data.results.vote_average,
+       poster_path:res.data.results.poster_path,
+       release_date:res.data.results.release_date
+     }
+    dispatch({
       type:SEARCH_MOVIES,
-      payload: movies,
-      clicked:true
-    };
+      movies: res.data.results,
+      movie:movie
+    });
+        }
+  
+  ).catch(res => (res.data));
+};
 }
 
 export const getPopularMovies = () => {
   return dispatch =>{
     axios.get('https://api.themoviedb.org/3/movie/popular?api_key=70037eb6c1b2400133d1c709f9d0dd6f&language=en-US&page=1')
     .then(res =>{
-      
-      movie = {
+        console.log(res.data);
+      movie={
         id:res.data.results.id,
         title:res.data.results.title,
         overview:res.data.results.overview,
@@ -45,86 +46,68 @@ export const getPopularMovies = () => {
         poster_path:res.data.results.poster_path,
         release_date:res.data.results.release_date
       }
-      if(res.status === 200){
         dispatch({
         type:POPULAR_MOVIES,
-        payload:res.data.results,
+        movies:res.data.results,
         movie:movie
+       
       });
-    }else{
-      return new notie.alert({
-        type:3,
-        text:'Sorry Something Went Wrong...'
-      })
-    }
-  });
+    });
   };
 }
 
-export const updateMyMovies = movie =>{
-  return dispatch =>{
-  const valueId = movieArray.findIndex(value => movie === value);
-        duplicateMovie(movie);
-        movieArray[valueId] = movie;
-      dispatch({
-        type:UPDATE_MOVIE,
-        payload:movieArray[valueId]
-      });
-    };
+export const addMovie = movie =>{
+  return dispacth =>{
+    movie = {
+          id:'',
+          title:'',
+          overview:'',
+          vote_average:'',
+          poster_path:'',
+          release_date:''
+    }
+    
+    dispacth({
+        type:ADD_MOVIE,
+        movie:movie,
+        clicked:true
+    });
+  }
 }
-
+  
 export const saveMovie = movie => {
 
-  return dispatch =>{
+ const i = movieArray.findIndex( item => item.title === movie.title);
+ return dispatch =>{
+  if( i > -1 ) {
+     movieArray[i] = movie;
+    swal("Your Movie Exist!");
+  }else{
+    movieArray.push(movie);
+    swal("Your Movie Has Been Saved!");
+  }
+
     dispatch({
-    type:SAVE_MOVIE,
-    payload:movie ? updateMyMovies(movie) : addMovie(movie),
-    movie:movie
-
-  });
-
-};
-
-}
-export const addMovie = (movie) =>{
-  return disptach => {
-  const movieAdd = duplicateMovie(movie);
-        if (movieAdd === movie){ return;
-        }else {
-            movieArray.push(movieAdd);
-            disptach({
-              type:ADD_MOVIE,
-              payload:movieArray
-            })
-        }
-  };
+      type:SAVE_MOVIE,
+      movies:movieArray,
+      movie:movie
+      
+    });
+  }
 }
 
-export const duplicateMovie = (movie) => {
-    let duplicate = false;
-      movieArray.some(duplicated => {
-        if (duplicated.id !== movie.id) {
-            duplicate = true;
-            return new notie.alert({
-              type:3,
-              text:'This Movie is Already exist',
-              position:'top',
-            })
-          }else{
-            return new notie.alert({
-              type:1,
-              text:'This Movie is Added exist',
-              position:'top'
-          })
-        }
-
-      });
-      return duplicate;
-    }
 
 
 export const selectedMovieSearch = movie =>{
   return dispatch => {
+    movie = {
+      id:movie.id,
+      title:movie.title,
+      overview:movie.overview,
+      vote_average:movie.vote_average,
+      poster_path:movie.poster_path,
+      release_date:movie.release_date
+}
     dispatch({
     type:SELECT_MOVIE,
     movie:movie

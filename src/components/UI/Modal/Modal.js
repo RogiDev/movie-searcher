@@ -5,12 +5,14 @@ import styles from './Model.module.css';
 
 
 class MyModal extends Component{
-
+constructor(props){
+  super(props);
+}
 render(){
     return (
       <Fragment>
         <Backdrop show={this.props.show} modalClosed={this.props.modalClosed}/>
-      <div
+      <div {...this.props}
         className={styles.Modal}
         style={{
           transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',

@@ -1,11 +1,12 @@
-import {SEARCH_MOVIES,UPDATE_MOVIE,SAVE_MOVIE,SELECT_MOVIE,ADD_MOVIE,POPULAR_MOVIES,CLEAN_SEARCH} from './actions.js'
+import {SEARCH_MOVIES,SAVE_MOVIE,SELECT_MOVIE,POPULAR_MOVIES,CLEAN_SEARCH, ADD_MOVIE} from './actions.js'
 
 
 const initialState = {
   movies: [],
   clicked:false,
   movie:{},
-  myMovies:[]
+  myMovies:[],
+  myMovie:{}
 }
 
 const reducer = (state = initialState , action = {}) => {
@@ -13,15 +14,16 @@ const reducer = (state = initialState , action = {}) => {
       case (SEARCH_MOVIES):{
       return{
       ...state,
-      movies:[].concat(action.payload),
-      searchValue:action.searchValue,
-      clicked:true
+      movies:action.movies,
+      movie:action.movie
+     
         };
       }
     case (POPULAR_MOVIES):{
         return{
           ...state,
-        movies: state.movies.concat(action.payload)
+        movies:action.movies,
+        movie:action.movie
 
         };
       }
@@ -30,46 +32,34 @@ const reducer = (state = initialState , action = {}) => {
         return{
         ...state,
           movie:{
-           ...state.movie,
+            ...state.movie,
             id: action.movie.id,
             title: action.movie.title,
             overview: action.movie.overview,
             poster_path: action.movie.poster_path,
             vote_average: action.movie.vote_average,
             release_date: action.movie.release_date
-            
           }
       };
     }
-    case(ADD_MOVIE):{
-      return {
-        ...state,
-      myMovies:action.payload,
-      movie:action.movie
-      
-      };
-    }
 
+    case(ADD_MOVIE):{
+      return{
+        ...state,
+        movie:action.movie,
+        clicked:true
+      }
+    }
+  
     case(SAVE_MOVIE):{
       return {
       ...state,
-      myMovies:action.payload,
-      movie:action.movie
-      };
+     myMovies:action.movies,
+     myMovie:action.movie,
+     clicked:false
     }
+  }
   
-
-    case(UPDATE_MOVIE):{
-      return {
-        ...state,
-        myMovies:action.payload, 
-        movie:action.movie
-      };
-    }
-  
-
-
-
     case(CLEAN_SEARCH):{
       return{
         ...state,

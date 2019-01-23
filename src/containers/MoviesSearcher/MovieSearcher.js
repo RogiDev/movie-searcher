@@ -1,27 +1,27 @@
 
 import React, { Component,Fragment } from 'react';
-import Search from '../../components/UI/Search/Search.js';
+import Input from '../../components/UI/Input/Input';
 import Movie from '../../components/Movies/Movie/Movie.js';
 import {Button} from 'reactstrap';
 import axios from 'axios';
 import Modal from '../../components/UI/Modal/Modal.js';
 import {connect} from 'react-redux';
-import {searchMoviesFromDB,cleanAllData, getPopularMovies} from '../../store/movieSearcher.js';
+import {saveMovie,addMovie,searchMoviesFromDB,cleanAllData, getPopularMovies} from '../../store/movieSearcher.js';
 import EditMovie from '../../components/EditMovie/EditMovie.js';
 import withErrorHandler from '../withErrorHandler/withErrorHandler.js';
 
 export class MovieSearcher extends Component {
 
-state ={
-  movieName:'',
-  open:false
-}
 
-componentWillMount() {
+  state ={
+    movieName:'',
+    open:false
+  }
+
+
+
+componentWillMount = () =>  {
   this.props.getPopularMovies();
-}
-componentWillUnmount() {
-  this.props.cleanAllData();
 }
 
 
@@ -62,20 +62,32 @@ closeModal = () =>{
         <Fragment >
 
           <div style={{display:'flex'}}>
-            <Search changed={(event) => this.searchMovieHandler(event)}
+            <Input inputtype='input' changed={(event) => this.searchMovieHandler(event)}
             />
-          <Button style={{marginTop:"18px" ,
+          <Button style={{marginTop:"20px" ,
+                  marginLeft:"5px",
               backgroundColor: "#6D0301",
             color: "white",
             boxSizing: "border-box",
             textAlign:'center',
             alignItems:'center',
             display:'block',
-            width:'20%'
+            width:'30%'
           }}
-              clicked={this.props.clicked}
+              
               onClick={()=> this.props.searchMoviesFromDB(this.state.movieName)}
           >Search</Button>
+          <Button style={{marginTop:"20px" ,
+                marginLeft:"5px",
+              backgroundColor: "#6D0301",
+            color: "white",
+            boxSizing: "border-box",
+            textAlign:'center',
+            alignItems:'center',
+            display:'block',
+            width:'40%'}}
+            clicked={this.props.clicked}
+            onClick={() => this.modalOpener(this.props.addMovie())}>Add New Movie </Button>
       </div>
 
 
@@ -85,7 +97,7 @@ closeModal = () =>{
           />
 
 
-        <Modal show={this.state.open} modalClosed={this.closeModal}>
+        <Modal {...this.props} show={this.state.open} modalClosed={this.closeModal}>
             <EditMovie {...this.props} modalClosed={this.closeModal} />
         </Modal>
 
@@ -101,11 +113,10 @@ closeModal = () =>{
 const mapStateToProps = state =>{
     return {
       movies:state.movies,
-      clicked:state.clicked,
-      movie:state.movie
-
+      movie:state.movie,
+      clicked:state.clicked
   }
 };
 
 
-export default connect(mapStateToProps,{searchMoviesFromDB,cleanAllData,getPopularMovies})(withErrorHandler(MovieSearcher,axios));
+export default connect(mapStateToProps,{saveMovie,addMovie,searchMoviesFromDB,cleanAllData,getPopularMovies})(withErrorHandler(MovieSearcher,axios));

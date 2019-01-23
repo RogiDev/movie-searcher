@@ -1,11 +1,9 @@
 import React from 'react';
-
-
 import {Input,InputGroup,InputGroupAddon} from 'reactstrap';
-import styles from './Search.module.css';
+import styles from './Input.module.css';
 
 
-const search = (props) => {
+const input = (props) => {
 
 
       return (
@@ -21,4 +19,4 @@ const search = (props) => {
 
 };
 
-export default search;
+export default input;

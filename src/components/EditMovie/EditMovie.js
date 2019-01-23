@@ -1,127 +1,130 @@
 import React,{Component,Fragment} from 'react';
 import {connect} from 'react-redux';
-import {alert} from 'notie';
-import {Button ,InputGroup,Input} from 'reactstrap';
-import {saveMovie,addMovie} from '../../store/movieSearcher.js'
+import {Button} from 'react-bootstrap';
 import withErrorHandler from '../../containers/withErrorHandler/withErrorHandler.js';
 import axios from 'axios';
-
+import { withFormik,Form,Field } from 'formik';
+import * as Yup from 'yup';
+import {withRouter} from 'react-router-dom';
 
 class EditMovie extends Component {
 
-  state= {
-    editedMovie:{}
-
+constructor(props){
+  super(props);
 }
-
-componentWillMount = () => {
-  this.state.editedMovie = {
-      id: this.props.movie.id,
-      poster_path: this.props.movie.poster_path,
-      overview:this.props.movie.overview,
-      vote_average:this.props.movie.vote_average,
-      title:this.props.movie.title,
-      release_date:this.props.movie.release_date
-  }
+closeModal = (event) => {
+ 
 }
-
-
-
-  validationState = () => {
-    let movie = this.props.movie;
-        for (let key in movie) {
-            if (movie[key] === '' || movie[key] === ' ') {
-                new alert({
-                  type:3,
-                  text:'Please Fill All Fields!'
-                });
-                return false;
-            }else{
-             new alert({type: 1, text: 'Your Movie Has Been Added' })
-            }
-        }
-  }
-
-
-  closeModal = (event, modalClicked,validationState,movie,saveMovie) => {
-      this.props.saveMovie(movie);
-  }
-
-
-  InputOnChangeHandler = (event,inputIdentifier) => {
-    event.preventDefault();
-    let  updatedMovie = {
-        ...this.state.editedMovie[inputIdentifier]
-      };
-   
-    updatedMovie[inputIdentifier] =  event.target.value;
-    this.setState({
-      editedMovie:updatedMovie
-     
-    });
-
-  }
 
   render() {
-    
-    let movieFormArray = [];
-    for(let key in this.state.editedMovie){
-      movieFormArray.push({
-        id:key
-      })
-    }
-    let form = 
-    movieFormArray.map( (key,i) => {
-     
-        return(
-         
-          <form >
-            
+
+    let finalForm =
+          <Form 
+           onSubmit={this.props.handleSubmit}>
+          {this.props.clicked === !true 
+            ?
             <img width='100px' alt='poster' src={`https://image.tmdb.org/t/p/w500/${this.props.movie.poster_path}`} />
+            :
+            <div>
+              <label>No Img</label>
+            </div>
+            }
             <hr></hr>
-            <label>You Choose: {this.state.editedMovie.title}</label>
-              <div style={{display:'flex', textAlign:'center' ,justifyContent:'center'}}>
-          <InputGroup style={{display:'block',width:'80%'}} key={key + i} >
-            <p>Title:</p> <Input  type='text' defaultValue={this.props.movie.title} onChange={(event)=>this.InputOnChangeHandler(event,key.id)} />
-            <p>Rate:</p> <Input type='text' defaultValue={this.props.movie.vote_average} onChange={(event)=>this.InputOnChangeHandler(event,key.id)} />
-            <p>Date:</p> <Input type='text' defaultValue={this.props.movie.release_date} onChange={(event)=>this.InputOnChangeHandler(event,key.id)} />
-            <p>Overview</p> <Input type='text' defaultValue={this.props.movie.overview} onChange={(event)=>this.InputOnChangeHandler(event,key.id)} />
-          </InputGroup>
-        </div>
-          <div style={{marginTop:'10px',display:'flex',justifyContent: 'space-around',textAlign:'center',
-          alignItems:'center'}}>
-          <Button style={{backgroundColor: "#6D0301",
-        color: "white",
-        boxSizing: "border-box",
-        display:'block',
-        width:'30%'
+            <div>
+              {this.props.touched.title && this.props.errors.title && <p>{this.props.errors.title}</p>}
+          <label>Title:</label>
+          <Field
+          type="text"
+          name='title' 
+            />
+            </div>
 
-      }}onClick={(event) => this.closeModal(event,this.props.modalClosed('false'),this.validationState,key,this.props.saveMovie(this.props.movie))} >Save</Button>
-      <Button style={{backgroundColor: "#6D0301",
-        color: "white",
-        boxSizing: "border-box",
-        display:'block',
-        width:'30%'
-      }}>Cancel</Button>
-    </div>
-    </form>
-    
-    );
-      
-    })
-    .reduce((arr,el) =>{
-      return arr.concat(el);
-    },[]);
+            <div>
+            { this.props.touched.release_date  && this.props.errors.release_date && <p>{this.props.errors.release_date}</p>}
+          <label>Release Date:</label>
+          <Field
+          type="date"
+          name="release_date"
+          />
+          </div>
+            <div>
+            { this.props.touched.vote_average  && this.props.errors.vote_average && <p>{this.props.errors.vote_average}</p>}
+          <label>Rate:</label>
+          <Field 
+          name='vote_average'
+          type="number"
+         
+           />
+            </div>
+            <div>
+            {this.props.touched.overview && this.props.errors.overview && <p>{this.props.errors.overview}</p>}
+          <label>Overview:</label>
+          <Field
+          name='overview'
+          type="overview"
+          />
+          </div>
+           <hr></hr>
+           <div style={{marginTop:'10px',display:'flex',justifyContent: 'space-around',textAlign:'center',
+        alignItems:'center'}}>
+        <Button style={{backgroundColor: "#6D0301",
+      color: "white",
+      boxSizing: "border-box",
+      display:'block',
+      width:'50%'
 
+    }} type="submit" >Save</Button>
+    <Button style={{backgroundColor: "#6D0301",
+      color: "white",
+      boxSizing: "border-box",
+      display:'block',
+      width:'50%'
+    }} onClick={(event) => this.props.modalClosed('false')}>Cancel</Button>
+  </div>
+  
+     </Form>;
 
         return (
           <Fragment>
-              {form[0]}
+              {finalForm}
         </Fragment>
     );
-  }
+        
+   }
 }
 
+const mapStateToProps = state =>{
+  return {
+    clicked:state.clicked,
+    movie:state.movie
+}
+};
 
-
-export default connect(null,{saveMovie,addMovie})(withErrorHandler(EditMovie,axios));
+const connection = 
+withRouter(connect(mapStateToProps)(withErrorHandler(EditMovie,axios)));
+const formik = withFormik({
+  mapPropsToValues: (props) => ({
+      title:props.movie.title,
+      overview:props.movie.overview,
+      vote_average:props.movie.vote_average,
+      release_date:props.movie.release_date,
+      id:props.movie.id,
+      poster_path:props.movie.poster_path
+  }),
+  handleSubmit:(values,{props}) => {
+  props.saveMovie(values);
+  props.modalClosed('false');
+  props.history.push('/mymovies');
+  console.log(props);
+  },
+  enableReinitialize:true,
+  validationSchema: ()=> Yup.object().shape({
+  title: Yup.string('Title Have To Be A String!').required('Title has been required').min(2),
+  overview: Yup.string('overview must be a string!'),
+  vote_average: Yup.number('Rate Should Be A Number!'),
+  release_date:Yup.date()
+  })
+  })(connection);
+  
+  
+export default (formik);
