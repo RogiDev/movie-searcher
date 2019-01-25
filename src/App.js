@@ -13,6 +13,7 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={MovieSearcher} />
             <Route path="/mymovies" component={MyMovies} />
+            <Route render={() => <h1>Page Not Found!</h1>}/>
           </Switch>
           </Layout>
       </div>

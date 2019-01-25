@@ -5,9 +5,7 @@ import styles from './Model.module.css';
 
 
 class MyModal extends Component{
-constructor(props){
-  super(props);
-}
+
 render(){
     return (
       <Fragment>

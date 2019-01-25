@@ -8,7 +8,10 @@ class MyMovies extends Component {
    
 
     render(){
-        let myMoviesArray = Object.values(this.props.myMovies).map((movie,i) => {
+    
+       
+       let myMoviesArray = Object.values(this.props.myMovies).map((movie,i) => {
+            
             return (
                 <li className={styles.MovieHolder} key={movie.title}>
                 <div>
@@ -39,6 +42,9 @@ class MyMovies extends Component {
              
             );
         });
+      
+    
+    
         return(
             <Fragment>
                 <h2>My Movies:</h2>

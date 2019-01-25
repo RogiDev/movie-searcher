@@ -1,7 +1,6 @@
 import React,{Component,Fragment} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'react-bootstrap';
-import {Input} from 'reactstrap';
 import withErrorHandler from '../../containers/withErrorHandler/withErrorHandler.js';
 import axios from 'axios';
 import { withFormik,Form,Field } from 'formik';
@@ -11,9 +10,7 @@ import styles from './EditMovie.module.css'
 
 class EditMovie extends Component {
 
-constructor(props){
-  super(props);
-}
+
 closeModal = (event) => {
  
 }
@@ -81,7 +78,7 @@ closeModal = (event) => {
       boxSizing: "border-box",
       display:'block',
       width:'50%'
-    }} onClick={(event) => this.props.modalClosed('false')}>Cancel</Button>
+    }} onClick={() => this.props.modalClosed('false')}>Cancel</Button>
   </div>
   
      </Form>;

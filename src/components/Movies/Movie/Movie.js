@@ -8,9 +8,6 @@ import axios from 'axios';
 
 class Movie extends Component{
 
-  constructor(props){
-    super(props);
-  }
   modalShow = (event,modalClicked,selectedMovieSearch,movie ) => {
 
   }

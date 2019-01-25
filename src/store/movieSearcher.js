@@ -75,7 +75,7 @@ export const addMovie = movie =>{
 }
 
 export const deleteMovie = movie =>{
-    let filteredArray  = movieArray.filter(item => item == movie);
+    let filteredArray  = movieArray.filter(item => item === movie);
     movieArray.shift(filteredArray);
     swal('Your Movie Has Been Deleted!');
   return dispacth =>{
