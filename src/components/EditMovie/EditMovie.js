@@ -1,6 +1,7 @@
 import React,{Component,Fragment} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'react-bootstrap';
+import {Input} from 'reactstrap';
 import withErrorHandler from '../../containers/withErrorHandler/withErrorHandler.js';
 import axios from 'axios';
 import { withFormik,Form,Field } from 'formik';
@@ -115,17 +116,18 @@ const formik = withFormik({
       poster_path:props.movie.poster_path
   }),
   handleSubmit:(values,{props}) => {
+
   props.saveMovie(values);
   props.modalClosed('false');
   props.history.push('/mymovies');
-  console.log(props);
+ 
   },
   enableReinitialize:true,
   validationSchema: ()=> Yup.object().shape({
   title: Yup.string('Title Have To Be A String!').required('Title has been required').min(2),
   overview: Yup.string('overview must be a string!'),
-  vote_average: Yup.number('Rate Should Be A Number!'),
-  release_date:Yup.date()
+  vote_average: Yup.number('Rate Should Be A Number!').min(0,'Minimum Rate Have To Be 0!').max(10,"Max Rate HaveTo Be 10!"),
+  release_date:Yup.date().min(1900,'Please Choose Another Date!')
   })
   })(connection);
   

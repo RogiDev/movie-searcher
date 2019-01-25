@@ -1,17 +1,16 @@
 import React,{Component,Fragment} from 'react';
 import {connect} from 'react-redux';
+import {deleteMovie} from '../../store/movieSearcher'
 import styles from './MyMovies.module.css';
+import {Button} from 'react-bootstrap';
 
 class MyMovies extends Component {
-    constructor(props){
-        super(props);
-        console.log(props);
-    }
+   
 
     render(){
-        let myMoviesArray = Object.values(this.props.myMovies).map(movie => {
+        let myMoviesArray = Object.values(this.props.myMovies).map((movie,i) => {
             return (
-                <li className={styles.MovieHolder}>
+                <li className={styles.MovieHolder} key={movie.title}>
                 <div>
                   <label>Title:</label>  {movie.title}
                 </div>
@@ -24,7 +23,20 @@ class MyMovies extends Component {
                 <div>
                   <label>Overview:</label>  {movie.overview}
                 </div>
+                <hr></hr>
+                    <Button style={{ backgroundColor: "#6D0301",
+                            color: "white",
+                            boxSizing: "border-box",
+                            textAlign:'center',
+                            alignItems:'center',
+                            display:'flex',
+                            margin:'auto',
+                           }} 
+                            onClick={(movie) => this.props.deleteMovie(movie[i])}>
+                            Delete Movie
+                            </Button>
                 </li>
+             
             );
         });
         return(
@@ -49,4 +61,4 @@ const mapStateToProps = state =>{
 }
 
 
-export default connect(mapStateToProps)(MyMovies);
+export default connect(mapStateToProps,{deleteMovie})(MyMovies);

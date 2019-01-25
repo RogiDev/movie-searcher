@@ -1,4 +1,4 @@
-import {SEARCH_MOVIES,SAVE_MOVIE,SELECT_MOVIE,POPULAR_MOVIES,CLEAN_SEARCH, ADD_MOVIE} from './actions.js'
+import {SEARCH_MOVIES,DELETE_MOVIE,SAVE_MOVIE,SELECT_MOVIE,POPULAR_MOVIES,CLEAN_SEARCH, ADD_MOVIE} from './actions.js'
 
 
 const initialState = {
@@ -48,6 +48,14 @@ const reducer = (state = initialState , action = {}) => {
         ...state,
         movie:action.movie,
         clicked:true
+      }
+    }
+
+    case(DELETE_MOVIE):{
+      return{
+        ...state,
+       myMovies:action.movies,
+       movie:{...state.movie}
       }
     }
   

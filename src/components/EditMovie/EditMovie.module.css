@@ -1,13 +1,23 @@
 .Input {
-    display: block;
+  width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     text-align: center;
     padding: auto;
   }
   
-  .Input Field,label,Form{
+  .Input label,Form{
     display:block ;
     width: 100%;
   }
 
+  @media (min-width:500px) {
+    .Input{
+      justify-items: center;
+      justify-content: center;
+      box-shadow: 1px 1px 1px 1px #ccc;
+  
+    }
+  }
   

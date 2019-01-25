@@ -1,15 +1,19 @@
 .Container{
-    width: 80%;
+   
     display: flex;
     box-sizing: border-box;
-    margin: 20px auto auto auto;
+    margin: 20px 20px auto auto;
+    justify-items: center;
+    justify-content: center;
 }
 
 .MovieHolder{
-    width:90%;
+    width: 90%;
     padding: 30px;
     box-shadow: 1px 1px 1px 1px #ccc;
     margin:auto;
+   justify-content: center;
+   flex-direction: column;
    
 }
 
@@ -18,3 +22,11 @@
   
   }
   
+
+  @media (min-width:500px){
+      .MovieHolder{
+          width:400px;
+            justify-content: center;
+          justify-items: center;
+      }
+  }

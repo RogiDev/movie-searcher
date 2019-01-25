@@ -1,4 +1,4 @@
-import {SEARCH_MOVIES,ADD_MOVIE,SAVE_MOVIE, POPULAR_MOVIES,SELECT_MOVIE, CLEAN_SEARCH} from './actions.js'
+import {SEARCH_MOVIES,ADD_MOVIE,SAVE_MOVIE, POPULAR_MOVIES,SELECT_MOVIE, CLEAN_SEARCH, DELETE_MOVIE} from './actions.js'
 import axios from 'axios';
 import swal from 'sweetalert';
 
@@ -37,7 +37,6 @@ export const getPopularMovies = () => {
   return dispatch =>{
     axios.get('https://api.themoviedb.org/3/movie/popular?api_key=70037eb6c1b2400133d1c709f9d0dd6f&language=en-US&page=1')
     .then(res =>{
-        console.log(res.data);
       movie={
         id:res.data.results.id,
         title:res.data.results.title,
@@ -73,6 +72,20 @@ export const addMovie = movie =>{
         clicked:true
     });
   }
+}
+
+export const deleteMovie = movie =>{
+    let filteredArray  = movieArray.filter(item => item == movie);
+    movieArray.shift(filteredArray);
+    swal('Your Movie Has Been Deleted!');
+  return dispacth =>{
+    dispacth({
+      type:DELETE_MOVIE,
+      movie:movie,
+      movies:movieArray
+    });
+  }
+  
 }
   
 export const saveMovie = movie => {

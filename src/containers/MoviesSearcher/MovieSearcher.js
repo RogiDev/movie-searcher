@@ -6,7 +6,7 @@ import {Button} from 'reactstrap';
 import axios from 'axios';
 import Modal from '../../components/UI/Modal/Modal.js';
 import {connect} from 'react-redux';
-import {saveMovie,addMovie,searchMoviesFromDB,cleanAllData, getPopularMovies} from '../../store/movieSearcher.js';
+import {deleteMovie,saveMovie,addMovie,searchMoviesFromDB,cleanAllData, getPopularMovies} from '../../store/movieSearcher.js';
 import EditMovie from '../../components/EditMovie/EditMovie.js';
 import withErrorHandler from '../withErrorHandler/withErrorHandler.js';
 
@@ -119,4 +119,4 @@ const mapStateToProps = state =>{
 };
 
 
-export default connect(mapStateToProps,{saveMovie,addMovie,searchMoviesFromDB,cleanAllData,getPopularMovies})(withErrorHandler(MovieSearcher,axios));
+export default connect(mapStateToProps,{deleteMovie,saveMovie,addMovie,searchMoviesFromDB,cleanAllData,getPopularMovies})(withErrorHandler(MovieSearcher,axios));
